@@ -24,6 +24,7 @@ export interface Profile {
   };
   resumeUrl: string;
   portraitUrl: string;
+  secondaryPortraitUrl: string;
   pillars: {
     title: string;
     description: string;
@@ -43,7 +44,7 @@ export const profileData: Profile = {
     paragraphs: [
       "I am a Computer Science and Engineering undergraduate at S.R.K.R. Engineering College with a deep passion for full-stack engineering, applied artificial intelligence, and end-to-end workflow automation.",
       "My development philosophy is rooted in practical problem solving and research-driven implementation. Rather than building static prototypes, I focus on end-to-end solutions—from intuitive user interfaces in React to intelligent AI agents with Gemini and robust backend pipelines.",
-      "Beyond code, I actively contribute to the technical community as an Executive Body Member of ACE and ACM, collaborate on national-level hackathons, and explore marginal gains in both software architecture and public speaking.",
+      "Beyond code, I actively contribute to the technical community as an Executive Body Member of ACE & ACM, collaborate on national-level hackathons, and explore marginal gains in both software architecture and public speaking.",
     ],
     highlights: [
       {
@@ -79,6 +80,7 @@ export const profileData: Profile = {
   },
   resumeUrl: "/resume/Hari_Charan_Resume.pdf",
   portraitUrl: "/images/hari-charan-portrait.jpg",
+  secondaryPortraitUrl: "/images/hari-charan-portrait-2.jpg",
   pillars: [
     {
       title: "Full Stack Engineering",

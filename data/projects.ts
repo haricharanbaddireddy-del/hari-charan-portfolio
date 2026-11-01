@@ -21,7 +21,7 @@ export const projectsData: Project[] = [
     category: "AI & Full Stack",
     tagline: "AI-Based Grievance Registration & Civic Assistance System",
     description:
-      "A comprehensive civic intelligence platform designed for district administrations, allowing citizens to submit complaints via voice or text in Telugu and English with automated categorization and letter generation.",
+      "A comprehensive civic intelligence platform designed for district collectorates, allowing citizens to submit complaints via voice or text in Telugu and English with automated speech transcription, categorization, and formal letter generation.",
     problemSolved:
       "Citizens face language barriers, complex bureaucratic forms, and long queues at district collectorates. Meanwhile, administration officers struggle to manually sort, prioritize, and route high volumes of petitions across dozens of departments.",
     keyFeatures: [
@@ -43,7 +43,7 @@ export const projectsData: Project[] = [
       "PDFKit",
       "REST APIs",
     ],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/",
+    githubUrl: "https://github.com/haricharanbaddireddy-del/Smart-Grievance-CSI-2k26.git",
     featured: true,
     statusBadge: "Featured Project",
     accentColor: "from-blue-500/20 to-indigo-500/10",
@@ -72,32 +72,10 @@ export const projectsData: Project[] = [
       "Email Automation",
       "REST Webhooks",
     ],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/",
+    githubUrl: "https://github.com/haricharanbaddireddy-del/AI-Hackathon-Team-Matcher",
     featured: true,
     statusBadge: "Automation System",
     accentColor: "from-purple-500/20 to-blue-500/10",
-  },
-  {
-    id: "mood-quote-generator",
-    name: "Mood Based Quote Generator",
-    category: "Web Development",
-    tagline: "Interactive Sentiment-Driven Inspiration Web Application",
-    description:
-      "A responsive web application that generates curated, inspirational thoughts and quotes tailored to the user's current emotional state, featuring local persistence for bookmarks and history.",
-    problemSolved:
-      "Generic motivational websites dump random quotes with no emotional relevance. This application delivers instant, sentiment-aligned inspiration with a clean, distraction-free aesthetic.",
-    keyFeatures: [
-      "Interactive mood selection palette (Motivated, Calm, Focused, Energetic, Reflective)",
-      "Dynamic random quote selection engine with instant refresh",
-      "Persistent 'Favorites' list backed by browser LocalStorage",
-      "Quote history timeline tracking previously viewed insights",
-      "One-click quote copying and sharing capability",
-    ],
-    technologies: ["HTML5", "CSS3", "JavaScript", "LocalStorage API", "Responsive UI"],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/",
-    featured: false,
-    statusBadge: "Web Application",
-    accentColor: "from-emerald-500/20 to-teal-500/10",
   },
   {
     id: "decision-making-spinner",
@@ -122,10 +100,55 @@ export const projectsData: Project[] = [
       "CSS Animations",
       "Vite",
     ],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/",
-    featured: false,
+    githubUrl: "https://github.com/haricharanbaddireddy-del/decision-making-spinner.git",
+    liveUrl: "https://decision-making-s-git-442c24-haricharanbaddireddy-dels-projects.vercel.app/",
+    featured: true,
     statusBadge: "Interactive App",
     accentColor: "from-amber-500/20 to-rose-500/10",
+  },
+  {
+    id: "mood-quote-generator",
+    name: "Mood Based Quote Generator",
+    category: "Web Development",
+    tagline: "Interactive Sentiment-Driven Inspiration Web Application",
+    description:
+      "A responsive web application that generates curated, inspirational thoughts and quotes tailored to the user's current emotional state, featuring local persistence for bookmarks and history.",
+    problemSolved:
+      "Generic motivational websites dump random quotes with no emotional relevance. This application delivers instant, sentiment-aligned inspiration with a clean, distraction-free aesthetic.",
+    keyFeatures: [
+      "Interactive mood selection palette (Motivated, Calm, Focused, Energetic, Reflective)",
+      "Dynamic random quote selection engine with instant refresh",
+      "Persistent 'Favorites' list backed by browser LocalStorage",
+      "Quote history timeline tracking previously viewed insights",
+      "One-click quote copying and sharing capability",
+    ],
+    technologies: ["HTML5", "CSS3", "JavaScript", "LocalStorage API", "Responsive UI"],
+    githubUrl: "https://github.com/haricharanbaddireddy-del/random-quote-generator.git",
+    liveUrl: "https://random-quote-generator-nu-swart.vercel.app/",
+    featured: false,
+    statusBadge: "Web Application",
+    accentColor: "from-emerald-500/20 to-teal-500/10",
+  },
+  {
+    id: "auto-birthday-wishes",
+    name: "Automatic Birthday Wish Sender",
+    category: "AI & Automation",
+    tagline: "Autonomous Workflow for Scheduled Calendar Greetings",
+    description:
+      "An automated workflow system that monitors dates in Google Calendar and dispatches tailored celebratory messages via Twilio and email on schedule without manual intervention.",
+    problemSolved:
+      "Eliminates missed birthdays and relationship check-ins for busy professionals by turning contact milestones into an autonomous, personalized communication pipeline.",
+    keyFeatures: [
+      "Daily scheduled cron triggers configured inside n8n workflow engine",
+      "Google Calendar & Contacts API integration to fetch milestone dates",
+      "Twilio SMS & messaging API integration for multi-channel delivery",
+      "Template personalization inserting recipient names and customized well-wishes",
+    ],
+    technologies: ["n8n", "Google Calendar API", "Twilio API", "Webhooks", "JSON"],
+    githubUrl: "https://github.com/haricharanbaddireddy-del/",
+    featured: false,
+    statusBadge: "Workflow Automation",
+    accentColor: "from-rose-500/20 to-pink-500/10",
   },
   {
     id: "campus-companion",
@@ -169,43 +192,4 @@ export const projectsData: Project[] = [
     statusBadge: "Hackathon Project",
     accentColor: "from-teal-500/20 to-emerald-500/10",
   },
-  {
-    id: "auto-birthday-wishes",
-    name: "Automatic Birthday Wish Sender",
-    category: "AI & Automation",
-    tagline: "Autonomous Workflow for Scheduled Calendar Greetings",
-    description:
-      "An automated workflow system that monitors dates in Google Calendar and dispatches tailored celebratory messages via Twilio and email on schedule without manual intervention.",
-    problemSolved:
-      "Eliminates missed birthdays and relationship check-ins for busy professionals by turning contact milestones into an autonomous, personalized communication pipeline.",
-    keyFeatures: [
-      "Daily scheduled cron triggers configured inside n8n workflow engine",
-      "Google Calendar & Contacts API integration to fetch milestone dates",
-      "Twilio SMS & messaging API integration for multi-channel delivery",
-      "Template personalization inserting recipient names and customized well-wishes",
-    ],
-    technologies: ["n8n", "Google Calendar API", "Twilio API", "Webhooks", "JSON"],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/",
-    featured: false,
-    statusBadge: "Workflow Automation",
-    accentColor: "from-rose-500/20 to-pink-500/10",
-  },
 ];
-
-/*
-  CONFIGURABLE EXTENSION:
-  To add upcoming projects (e.g., CampusOS, OptiNest), add new entries to projectsData:
-  {
-    id: "campus-os",
-    name: "CampusOS",
-    category: "AI & Full Stack",
-    tagline: "Intelligent University Operating System",
-    description: "...",
-    problemSolved: "...",
-    keyFeatures: ["..."],
-    technologies: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
-    githubUrl: "https://github.com/haricharanbaddireddy-del/CampusOS",
-    featured: true,
-    statusBadge: "In Development",
-  }
-*/

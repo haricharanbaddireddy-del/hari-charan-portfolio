@@ -3,22 +3,42 @@
 @tailwind utilities;
 
 :root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --surface: #FFFFFF;
+  --surface-subtle: #F1F5F9;
+  --surface-card: #FFFFFF;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-hover: rgba(99, 102, 241, 0.35);
+  --text-muted: #64748B;
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+}
+
+html.dark {
   --background: #08090C;
   --foreground: #F3F4F6;
+  --surface: #0F1117;
+  --surface-subtle: #141722;
+  --surface-card: #161A26;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(99, 102, 241, 0.3);
+  --text-muted: #94A3B8;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
-  selection-background-color: #6366f1;
-  selection-color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -32,20 +52,31 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090C;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f2433;
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 4px;
 }
 
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1f2433;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: rgba(99, 102, 241, 0.5);
 }
 
 /* Glassmorphism utility */
 .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+html.dark .glass-panel {
   background: rgba(15, 17, 23, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -53,15 +84,22 @@ body {
 }
 
 .glass-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark .glass-card {
   background: linear-gradient(180deg, rgba(22, 26, 38, 0.8) 0%, rgba(15, 17, 23, 0.6) 100%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
 }
 
 .glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.4);
   box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.15);
 }
 
@@ -69,11 +107,13 @@ body {
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
 }
 
-.bg-dots-pattern {
-  background-size: 24px 24px;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+html.dark .bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }

@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#08090C",
-  colorScheme: "dark",
+  colorScheme: "dark light",
   width: "device-width",
   initialScale: 1,
 };
@@ -63,13 +64,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="bg-background text-zinc-100 antialiased min-h-screen flex flex-col font-sans selection:bg-primary-500/30 selection:text-white">
-        <ScrollProgress />
-        <CustomCursor />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+      <body className="bg-background text-foreground antialiased min-h-screen flex flex-col font-sans selection:bg-primary-500/30 selection:text-white">
+        <ThemeProvider>
+          <ScrollProgress />
+          <CustomCursor />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
