@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { certificatesData, Certificate } from "@/data/certificates";
 import {
@@ -31,6 +31,36 @@ export default function CertificateGallery() {
     activeCategory === "All"
       ? certificatesData
       : certificatesData.filter((c) => c.category === activeCategory);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedCert(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Lock background page scroll while modal is open
+  useEffect(() => {
+    if (selectedCert) {
+      const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
+      };
+    }
+  }, [selectedCert]);
 
   return (
     <section id="certificates" className="py-24 relative overflow-hidden bg-grid-pattern">
@@ -149,17 +179,23 @@ export default function CertificateGallery() {
 
       {/* Full Certificate Modal */}
       {selectedCert && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[92vh] overflow-hidden bg-slate-900 border border-white/[0.15] rounded-2xl shadow-2xl flex flex-col">
+        <div
+          onClick={() => setSelectedCert(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200 overflow-y-auto pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden bg-slate-900 border border-white/[0.15] rounded-2xl shadow-2xl flex flex-col my-auto"
+          >
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.1] bg-slate-950/80">
-              <div className="flex items-center gap-3 pr-4 truncate">
+            <div className="flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 border-b border-white/[0.1] bg-slate-950/95 gap-2.5 flex-shrink-0 z-30">
+              <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-1 overflow-hidden">
                 <Award className="w-5 h-5 text-amber-400 flex-shrink-0" />
-                <div>
-                  <h3 className="text-base font-bold text-white truncate">
+                <div className="min-w-0 flex-1 truncate">
+                  <h3 className="text-sm sm:text-base font-bold text-white truncate min-w-0">
                     {selectedCert.title}
                   </h3>
-                  <span className="text-xs font-mono text-zinc-400">
+                  <span className="text-xs font-mono text-zinc-400 truncate block">
                     {selectedCert.event} • {selectedCert.organization}
                   </span>
                 </div>
@@ -167,10 +203,11 @@ export default function CertificateGallery() {
 
               <button
                 onClick={() => setSelectedCert(null)}
-                className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.1] transition-colors"
+                className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-white border border-white/25 shadow-lg hover:border-white/40 transition-all active:scale-95 flex-shrink-0 z-30 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500"
                 aria-label="Close certificate preview"
+                title="Close (Esc)"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 text-white stroke-[2.5]" />
               </button>
             </div>
 

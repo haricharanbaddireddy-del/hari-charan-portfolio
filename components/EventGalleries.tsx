@@ -59,6 +59,26 @@ export default function EventGalleries() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedEvent, nextImage, prevImage]);
 
+  // Lock background page scroll while popup is open
+  useEffect(() => {
+    if (selectedEvent) {
+      const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
+      };
+    }
+  }, [selectedEvent]);
+
   return (
     <section id="events" className="py-24 relative overflow-hidden bg-grid-pattern">
       {/* Background glow */}
@@ -151,27 +171,31 @@ export default function EventGalleries() {
 
       {/* Lightbox Modal */}
       {selectedEvent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200">
+        <div
+          onClick={closeLightbox}
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200 overflow-y-auto pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
+        >
           <div
+            onClick={(e) => e.stopPropagation()}
             className={`relative w-full ${
-              isFullScreen ? "max-w-[98vw] h-[95vh]" : "max-w-4xl max-h-[92vh]"
-            } overflow-hidden bg-slate-900 border border-white/[0.15] rounded-2xl shadow-2xl flex flex-col transition-all duration-300`}
+              isFullScreen ? "max-w-[98vw] h-[95vh]" : "max-w-4xl max-h-[90vh]"
+            } overflow-hidden bg-slate-900 border border-white/[0.15] rounded-2xl shadow-2xl flex flex-col transition-all duration-300 my-auto`}
           >
             {/* Modal Top Bar */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.1] bg-slate-950/80">
-              <div className="flex items-center gap-3">
-                <span className="px-2.5 py-0.5 rounded-full bg-primary-500/20 text-primary-300 text-xs font-mono border border-primary-500/30">
+            <div className="flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 border-b border-white/[0.1] bg-slate-950/95 gap-2.5 flex-shrink-0 z-30">
+              <div className="flex items-center gap-2 min-w-0 flex-1 pr-1 overflow-hidden">
+                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-primary-500/20 text-primary-300 text-[11px] font-mono border border-primary-500/30 flex-shrink-0">
                   {selectedEvent.badge}
                 </span>
-                <h3 className="text-base sm:text-lg font-bold text-white truncate max-w-md">
+                <h3 className="text-sm sm:text-base font-bold text-white truncate min-w-0">
                   {selectedEvent.title}
                 </h3>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   onClick={() => setIsFullScreen(!isFullScreen)}
-                  className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.1] transition-colors"
+                  className="hidden sm:flex p-2 rounded-xl text-zinc-300 hover:text-white bg-white/[0.08] hover:bg-white/[0.15] border border-white/10 transition-colors items-center justify-center min-w-[40px] min-h-[40px]"
                   aria-label="Toggle full screen"
                   title="Toggle full screen"
                 >
@@ -183,11 +207,11 @@ export default function EventGalleries() {
                 </button>
                 <button
                   onClick={closeLightbox}
-                  className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.1] transition-colors"
-                  aria-label="Close lightbox"
+                  className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-white border border-white/25 shadow-lg hover:border-white/40 transition-all active:scale-95 z-30 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  aria-label="Close event gallery"
                   title="Close (Esc)"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-white stroke-[2.5]" />
                 </button>
               </div>
             </div>
@@ -209,7 +233,7 @@ export default function EventGalleries() {
                 {selectedEvent.images.length > 1 && (
                   <button
                     onClick={prevImage}
-                    className="absolute left-3 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 transition-all active:scale-95 shadow-lg"
+                    className="absolute left-2 sm:left-3 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/75 hover:bg-black/95 active:bg-black text-white border border-white/20 transition-all active:scale-95 shadow-lg flex items-center justify-center z-10"
                     aria-label="Previous photograph"
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -220,7 +244,7 @@ export default function EventGalleries() {
                 {selectedEvent.images.length > 1 && (
                   <button
                     onClick={nextImage}
-                    className="absolute right-3 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 transition-all active:scale-95 shadow-lg"
+                    className="absolute right-2 sm:right-3 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/75 hover:bg-black/95 active:bg-black text-white border border-white/20 transition-all active:scale-95 shadow-lg flex items-center justify-center z-10"
                     aria-label="Next photograph"
                   >
                     <ChevronRight className="w-5 h-5" />

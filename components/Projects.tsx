@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { projectsData, Project } from "@/data/projects";
 import {
   FolderGit2,
@@ -27,6 +27,36 @@ export default function Projects() {
     selectedCategory === "All"
       ? projectsData
       : projectsData.filter((p) => p.category === selectedCategory);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveModalProject(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Lock background page scroll while project modal is open
+  useEffect(() => {
+    if (activeModalProject) {
+      const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
+      };
+    }
+  }, [activeModalProject]);
 
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
@@ -246,15 +276,22 @@ export default function Projects() {
 
       {/* Modal for In-depth Architecture Breakdown */}
       {activeModalProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0F1117] border border-slate-200 dark:border-white/[0.12] rounded-2xl shadow-2xl p-6 sm:p-8">
+        <div
+          onClick={() => setActiveModalProject(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0F1117] border border-slate-200 dark:border-white/[0.12] rounded-2xl shadow-2xl p-5 sm:p-8 my-auto"
+          >
             {/* Close Button */}
             <button
               onClick={() => setActiveModalProject(null)}
-              className="absolute top-5 right-5 p-2 rounded-lg text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors"
+              className="absolute top-3 right-3 sm:top-5 sm:right-5 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 text-slate-800 dark:text-white border border-slate-200 dark:border-white/20 shadow-md transition-all active:scale-95 z-30 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500"
               aria-label="Close project modal"
+              title="Close (Esc)"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 stroke-[2.5]" />
             </button>
 
             {/* Header */}
